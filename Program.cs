@@ -10,25 +10,20 @@ namespace SorteringsAlgoritmer
     {
         static void Main(string[] args)
         {
-            Random rnd = new Random();
+            Random rnd = new Random();         
 
+            int antal = 1000;
+
+            // Bubble Sort 
             List<int> bblList = new List<int>();
-            List<int> insList = new List<int>();
+
+            for(int a = 0; a < antal; a++){
+                bblList.Add(rnd.Next(0, 100));
+            }
+            
+            int listLength = bblList.Count;
 
             Stopwatch bblSW = new Stopwatch();
-            Stopwatch insSW = new Stopwatch();
-            Stopwatch mergeSW = new Stopwatch();
-
-            int antal = 10000;
-
-            for (int i = 0; i < antal; i++)
-            {
-                bblList.Add(rnd.Next());
-                insList.Add(rnd.Next());
-            }
-
-            // Bubblesort 
-            int listLength = bblList.Count;
             
             bblSW.Start();
             
@@ -44,8 +39,17 @@ namespace SorteringsAlgoritmer
 
             bblSW.Stop();
             
-            //Insertionsort
+            //Insertion Sort
+            List<int> insList = new List<int>();
+
+            for (int b = 0; b < antal; b++)
+            {
+                insList.Add(rnd.Next());
+            }
+
             int Lengthlist = insList.Count;
+
+            Stopwatch insSW = new Stopwatch();
             
             insSW.Start();
             for(int insA = 1; insA < Lengthlist; ++insA){
@@ -61,26 +65,25 @@ namespace SorteringsAlgoritmer
 
             insSW.Stop();
 
-            //Merge sort
-            mergeSW.Start();
-
+            //Merge Sort
             List<int> unsorted = new List<int>();
             List<int> sorted;
 
-            for(int a = 0; a< antal;a++){
+            for(int c = 0; c< antal;c++){
                 unsorted.Add(rnd.Next(0, 100));
             }
-            Console.WriteLine();
+
+            Stopwatch mergeSW = new Stopwatch();
+            
+            mergeSW.Start();
 
             sorted = MergeSort(unsorted);
 
             mergeSW.Stop();
 
-            Console.WriteLine("Bubblesort: " + bblSW.ElapsedMilliseconds);
-            Console.WriteLine("Insertionsort: " + insSW.ElapsedMilliseconds);
-            Console.WriteLine("Merge sort: " + mergeSW.ElapsedMilliseconds);
-
-
+            Console.WriteLine("Bubble Sort: " + bblSW.ElapsedMilliseconds);
+            Console.WriteLine("Insertion Sort: " + insSW.ElapsedMilliseconds);
+            Console.WriteLine("Merge Sort: " + mergeSW.ElapsedMilliseconds);
         }
 
         private static List<int> MergeSort(List<int> unsorted)
