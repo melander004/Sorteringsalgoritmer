@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
+using System.Text;
 
-namespace Sorteringsalgoritmer
+namespace dfhxgjgj
 {
     class Program
     {
@@ -10,56 +12,134 @@ namespace Sorteringsalgoritmer
         {
             Random rnd = new Random();
 
-            List<int> rndList = new List<int>();
-            List<int> randList = new List<int>();
+            List<int> bblList = new List<int>();
+            List<int> insList = new List<int>();
 
-            Stopwatch sw = new Stopwatch();
-            Stopwatch stopwatch = new Stopwatch();
+            Stopwatch bblSW = new Stopwatch();
+            Stopwatch insSW = new Stopwatch();
+            Stopwatch mergeSW = new Stopwatch();
 
+            int antal = 10000;
 
-            for (int i = 0; i < 1000; i++)
+            for (int i = 0; i < antal; i++)
             {
-                rndList.Add(rnd.Next());
-                randList.Add(rnd.Next());
+                bblList.Add(rnd.Next());
+                insList.Add(rnd.Next());
             }
 
             // Bubblesort 
-            int listLength = rndList.Count;
+            int listLength = bblList.Count;
             
-            sw.Start();
+            bblSW.Start();
             
-            for(int a = 0; a < (listLength - 1); a++){
-                for(int b = 0; b < (listLength - 1 - a); b++){
-                    if(rndList[b] > rndList[b + 1]){
-                        int c = rndList[b + 1];
-                        rndList[b + 1] = rndList[b];
-                        rndList[b] = c;
+            for(int bblA = 0; bblA < (listLength - 1); bblA++){
+                for(int bblB = 0; bblB < (listLength - 1 - bblA); bblB++){
+                    if(bblList[bblB] > bblList[bblB + 1]){
+                        int bblC = bblList[bblB + 1];
+                        bblList[bblB + 1] = bblList[bblB];
+                        bblList[bblB] = bblC;
                     }
                 }
             }
 
-            sw.Stop();
+            bblSW.Stop();
             
             //Insertionsort
-            int Lengthlist = randList.Count;
+            int Lengthlist = insList.Count;
             
-            stopwatch.Start();
-            for(int d = 1; d < Lengthlist; ++d){
-                int key = randList[d];
-                int e = d - 1;
+            insSW.Start();
+            for(int insA = 1; insA < Lengthlist; ++insA){
+                int key = insList[insA];
+                int insB = insA - 1;
 
-                while(e >= 0 && randList[e] > key){
-                    randList[e + 1] = randList[e];
-                    e = e - 1;
+                while(insB >= 0 && insList[insB] > key){
+                    insList[insB + 1] = insList[insB];
+                    insB = insB - 1;
                 }
-                randList[e + 1] = key;
+                insList[insB + 1] = key;
             }
 
-            stopwatch.Stop();
+            insSW.Stop();
 
-            Console.WriteLine("Bubblesort: " + sw.ElapsedMilliseconds);
-            Console.WriteLine("Insertionsort: " + stopwatch.ElapsedMilliseconds);
+            //Merge sort
+            mergeSW.Start();
 
+            List<int> unsorted = new List<int>();
+            List<int> sorted;
+
+            for(int a = 0; a< antal;a++){
+                unsorted.Add(rnd.Next(0, 100));
+            }
+            Console.WriteLine();
+
+            sorted = MergeSort(unsorted);
+
+            mergeSW.Stop();
+
+            Console.WriteLine("Bubblesort: " + bblSW.ElapsedMilliseconds);
+            Console.WriteLine("Insertionsort: " + insSW.ElapsedMilliseconds);
+            Console.WriteLine("Merge sort: " + mergeSW.ElapsedMilliseconds);
+
+
+        }
+
+        private static List<int> MergeSort(List<int> unsorted)
+        {
+            if (unsorted.Count <= 1)
+                return unsorted;
+
+            List<int> left = new List<int>();
+            List<int> right = new List<int>();
+
+            int middle = unsorted.Count / 2;
+            for (int i = 0; i < middle;i++)
+            {
+                left.Add(unsorted[i]);
+            }
+            for (int i = middle; i < unsorted.Count; i++)
+            {
+                right.Add(unsorted[i]);
+            }
+
+            left = MergeSort(left);
+            right = MergeSort(right);
+            return Merge(left, right);
+        }
+
+        private static List<int> Merge(List<int> left, List<int> right)
+        {
+            List<int> result = new List<int>();
+
+            while (left.Count > 0 || right.Count > 0)
+            {
+                if(left.Count > 0 && right.Count > 0)
+                {
+                    if(left.First() <= right.First())
+                    {
+                        result.Add(left.First());
+                        left.Remove(left.First());
+                    }
+                    
+                    else
+                    {
+                        result.Add(right.First());
+                        right.Remove(right.First());
+                    }  
+                }
+
+                else if(left.Count > 0)
+                {
+                    result.Add(left.First());
+                    left.Remove(left.First());
+                }
+
+                else if(right.Count > 0)
+                {
+                    result.Add(right.First());
+                    right.Remove(right.First());
+                }
+            }
+            return result;
         }
     }
 }
