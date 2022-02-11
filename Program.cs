@@ -81,9 +81,7 @@ namespace SorteringsAlgoritmer
 
             mergeSW.Stop();
 
-            Console.WriteLine("Bubble Sort: " + bblSW.ElapsedMilliseconds);
-            Console.WriteLine("Insertion Sort: " + insSW.ElapsedMilliseconds);
-            Console.WriteLine("Merge Sort: " + mergeSW.ElapsedMilliseconds);
+            Console.WriteLine($"Bubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds}");
         }
 
         private static List<int> MergeSort(List<int> unsorted)
