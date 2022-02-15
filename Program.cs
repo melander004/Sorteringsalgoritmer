@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace SorteringsAlgoritmer
+namespace slghuig
 {
     class Program
     {
@@ -12,13 +12,13 @@ namespace SorteringsAlgoritmer
         {
             Random rnd = new Random();         
 
-            int antal = 1000;
+            int antal = 8000;
 
             // Bubble Sort 
             List<int> bblList = new List<int>();
 
             for(int a = 0; a < antal; a++){
-                bblList.Add(rnd.Next(0, 100));
+                bblList.Add(rnd.Next());
             }
             
             int listLength = bblList.Count;
@@ -69,8 +69,8 @@ namespace SorteringsAlgoritmer
             List<int> unsorted = new List<int>();
             List<int> sorted;
 
-            for(int c = 0; c< antal;c++){
-                unsorted.Add(rnd.Next(0, 100));
+            for(int c = 0; c < antal; c++){
+                unsorted.Add(rnd.Next());
             }
 
             Stopwatch mergeSW = new Stopwatch();
@@ -81,7 +81,22 @@ namespace SorteringsAlgoritmer
 
             mergeSW.Stop();
 
-            Console.WriteLine($"Bubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds}");
+            //Quick Sort
+            List<int> quickUnsorted = new List<int>();
+
+            for(int d = 0; d < antal; d++){
+                quickUnsorted.Add(rnd.Next());
+            }
+
+            Stopwatch quickSW = new Stopwatch();
+            quickSW.Start();
+
+            QuickSort(quickUnsorted, 0, quickUnsorted.Count - 1);
+
+            quickSW.Stop();
+
+            Console.WriteLine($"Bubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds} \nQuick Sort: {quickSW.ElapsedMilliseconds} \n {quickSW.ElapsedTicks}");
+
         }
 
         private static List<int> MergeSort(List<int> unsorted)
@@ -141,6 +156,50 @@ namespace SorteringsAlgoritmer
                 }
             }
             return result;
+        }
+
+        private static void QuickSort(List<int> list, int left, int right)
+        {
+            if(left < right){
+                int pivot = Partition(list, left, right);
+
+                if(pivot > 1){
+                    QuickSort(list, left, pivot - 1);
+                }
+                if(pivot + 1 < right){
+                    QuickSort(list, pivot + 1, right);
+                }
+            }
+        }
+
+        private static int Partition(List<int> list, int left, int right)
+        {
+            int pivot = list[left];
+            while (true)
+            {   
+                while(list[left] < pivot)
+                {
+                    left++;
+                } 
+
+                while(list[right] > pivot)
+                {
+                    right--;
+                }
+
+                if(left < right)
+                {
+                    if(list[left] == list[right]) return right;
+                
+                    int temp = list[left];
+                    list[left] = list[right];
+                    list[right] = temp;
+                }
+                else
+                {
+                    return right;
+                }
+            }
         }
     }
 }
