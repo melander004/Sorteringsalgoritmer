@@ -21,7 +21,9 @@ namespace SorteringsAlgoritmer
             }
             Stopwatch stopwatch = new Stopwatch();
             stopwatch.Start();
+            
             list.Sort();
+            
             stopwatch.Stop();
             
             // Bubble Sort 
@@ -91,7 +93,7 @@ namespace SorteringsAlgoritmer
 
             mergeSW.Stop();
 
-            //Quick Sort
+            //Quicksort
             List<int> quickUnsorted = new List<int>();
 
             for(int d = 0; d < antal; d++){
@@ -105,9 +107,7 @@ namespace SorteringsAlgoritmer
 
             quickSW.Stop();
 
-            Console.WriteLine($"Default sorting thing: {stopwatch.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds} \nQuick Sort: {quickSW.ElapsedMilliseconds} \n{quickSW.ElapsedTicks}");
-
-            //\nBubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds}  
+            Console.WriteLine($"Bubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds} \nQuick Sort: {quickSW.ElapsedMilliseconds} \n.Sort(): {stopwatch.ElapsedMilliseconds}");
         }
 
         private static List<int> MergeSort(List<int> unsorted)
