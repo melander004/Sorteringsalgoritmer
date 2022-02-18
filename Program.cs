@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace rilgheivb
+namespace SorteringsAlgoritmer
 
 {
     class Program
@@ -13,7 +13,7 @@ namespace rilgheivb
         {
             Random rnd = new Random();         
 
-            int antal = 160000;
+            int antal = 10000;
 
             List<int> list = new List<int>();
             for(int i = 0; i < antal; i++){
