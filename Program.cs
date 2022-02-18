@@ -4,7 +4,8 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 
-namespace slghuig
+namespace rilgheivb
+
 {
     class Program
     {
@@ -12,8 +13,17 @@ namespace slghuig
         {
             Random rnd = new Random();         
 
-            int antal = 8000;
+            int antal = 160000;
 
+            List<int> list = new List<int>();
+            for(int i = 0; i < antal; i++){
+                list.Add(rnd.Next());
+            }
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
+            list.Sort();
+            stopwatch.Stop();
+            
             // Bubble Sort 
             List<int> bblList = new List<int>();
 
@@ -64,6 +74,7 @@ namespace slghuig
             }
 
             insSW.Stop();
+            
 
             //Merge Sort
             List<int> unsorted = new List<int>();
@@ -95,8 +106,9 @@ namespace slghuig
 
             quickSW.Stop();
 
-            Console.WriteLine($"Bubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds} \nQuick Sort: {quickSW.ElapsedMilliseconds} \n {quickSW.ElapsedTicks}");
+            Console.WriteLine($"Default sorting thing: {stopwatch.ElapsedMilliseconds} \nMerge Sort: {mergeSW.ElapsedMilliseconds} \nQuick Sort: {quickSW.ElapsedMilliseconds} \n{quickSW.ElapsedTicks}");
 
+            //\nBubble Sort: {bblSW.ElapsedMilliseconds} \nInsertion Sort: {insSW.ElapsedMilliseconds}  
         }
 
         private static List<int> MergeSort(List<int> unsorted)
