@@ -78,7 +78,6 @@ namespace rilgheivb
 
             //Merge Sort
             List<int> unsorted = new List<int>();
-            List<int> sorted;
 
             for(int c = 0; c < antal; c++){
                 unsorted.Add(rnd.Next());
@@ -88,7 +87,7 @@ namespace rilgheivb
             
             mergeSW.Start();
 
-            sorted = MergeSort(unsorted);
+            MergeSort(unsorted);
 
             mergeSW.Stop();
 
